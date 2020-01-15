@@ -17,7 +17,7 @@ public class CeaserCipher {
         String message = scan.nextLine();
 
         // Accept the key to use for encryption
-        System.out.println("Enter a key for encryption:");
+        System.out.println("Enter a key for encryption (key > 0):");
         int key = scan.nextInt();
         scan.nextLine();
 
@@ -51,7 +51,7 @@ public class CeaserCipher {
 
     private static String ceaserCipherDecryption(String encryptedString, int testKey) {
         StringBuilder decryptedString = new StringBuilder();
-        char a = 'a', z = 'z';
+        char a = 'a';
         for (int i = 0; i < encryptedString.length(); i++) {
             char cur_char = encryptedString.charAt(i);
             char dec_char = (char) ((cur_char - a - testKey + 26) % 26 + a);
