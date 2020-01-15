@@ -37,6 +37,9 @@ public class VigenereCipher {
 
     }
 
+    /**
+     * A function to brute force the encrypted message
+     */
     private static String bruteForceVigenereCipher(String encryptedString, String message) {
         String decryptedMessage = "-1";
         for (String key : stringArrayList) {
