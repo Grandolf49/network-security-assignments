@@ -25,12 +25,9 @@ public class CeaserCipher {
         String encryptedString = ceaserCipherEncryption(message, key);
         System.out.println("Encrypted string is: " + encryptedString);
 
-        // Decrypt the encrypted string to generate original message
-
-        /*System.out.println("Applying Brute Force for Decryption...");
+        System.out.println("Applying Brute Force for Decryption...");
         String decryptedString = bruteForceCeaserCipher(encryptedString, message);
         System.out.println("The original message is: " + decryptedString);
-        */
 
     }
 
@@ -42,7 +39,9 @@ public class CeaserCipher {
         while (!isMessageDecrypted) {
             testKey++;
             decryptedString = ceaserCipherDecryption(encryptedString, testKey);
+            System.out.println(decryptedString);
             if (decryptedString.equals(message)) {
+                System.out.println("Cipher successfully decrypted!");
                 isMessageDecrypted = true;
             }
         }
@@ -51,18 +50,22 @@ public class CeaserCipher {
     }
 
     private static String ceaserCipherDecryption(String encryptedString, int testKey) {
-        String decryptedString = "";
-
-        return decryptedString;
+        StringBuilder decryptedString = new StringBuilder();
+        char a = 'a', z = 'z';
+        for (int i = 0; i < encryptedString.length(); i++) {
+            char cur_char = encryptedString.charAt(i);
+            char dec_char = (char) ((cur_char - a - testKey + 26) % 26 + a);
+            decryptedString.append(dec_char);
+        }
+        return decryptedString.toString();
     }
 
     private static String ceaserCipherEncryption(String message, int key) {
         StringBuilder encryptedString = new StringBuilder();
-        char a = 'a', z = 'z';
+        char a = 'a';
         for (int i = 0; i < message.length(); i++) {
             char cur_char = message.charAt(i);
-            char enc_char = (char)((cur_char - a + key) % 26 + a);
-
+            char enc_char = (char) ((cur_char - a + key) % 26 + a);
             encryptedString.append(enc_char);
         }
         return encryptedString.toString();
