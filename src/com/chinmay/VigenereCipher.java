@@ -28,20 +28,48 @@ public class VigenereCipher {
         System.out.println("Encrypted message is: " + encryptedString);
 
         // Decrypt the message using Brute Force
+        System.out.println("Applying Brute Force for Decryption...");
+        System.out.println("Generating all combinations of keys...");
         generateAllStrings("", key.length() % message.length());
+        System.out.println();
+        String decryptedString = bruteForceVigenereCipher(encryptedString, message);
+        System.out.println("Decrypted message is: " + decryptedString);
 
     }
 
-    private static void generateAllStrings(String prefix, int n) {
-        if (prefix.length() == n) {
-            stringArrayList.add(prefix);
-        } else {
-            for (char a = 'a'; a < 'z'; a++) {
-                generateAllStrings(prefix + a, n);
+    private static String bruteForceVigenereCipher(String encryptedString, String message) {
+        String decryptedMessage = "-1";
+        for (String key : stringArrayList) {
+            String tempMessage = vigenereCipherDecryption(encryptedString, key);
+            System.out.println(tempMessage);
+            if (tempMessage.equals(message)) {
+                System.out.println("Cipher decrypted successfully!");
+                System.out.println("Encryption key detected: " + key);
+                decryptedMessage = tempMessage;
+                break;
             }
         }
+        return decryptedMessage;
     }
 
+    /**
+     * A function to decrypt a message with a key
+     */
+    private static String vigenereCipherDecryption(String encryptedString, String key) {
+        StringBuilder decryptedMessage = new StringBuilder();
+        char a = 'a';
+        for (int i = 0; i < encryptedString.length(); i++) {
+            char cur_char = encryptedString.charAt(i);
+            int cur_key = key.charAt(i % key.length()) - a + 1;
+            char enc_char = (char) ((cur_char - a - cur_key + 26) % 26 + a);
+            decryptedMessage.append(enc_char);
+        }
+        return decryptedMessage.toString();
+    }
+
+    /**
+     * A function to encrypt a message with a key
+     */
     private static String vigenereCipherEncryption(String message, String key) {
         StringBuilder encryptedString = new StringBuilder();
         char a = 'a';
@@ -55,5 +83,18 @@ public class VigenereCipher {
             encryptedString.append(enc_char);
         }
         return encryptedString.toString();
+    }
+
+    /**
+     * A function to generate all possible combinations of strings of length n
+     */
+    private static void generateAllStrings(String prefix, int n) {
+        if (prefix.length() == n) {
+            stringArrayList.add(prefix);
+        } else {
+            for (char a = 'a'; a < 'z'; a++) {
+                generateAllStrings(prefix + a, n);
+            }
+        }
     }
 }
