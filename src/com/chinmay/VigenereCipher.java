@@ -1,5 +1,6 @@
 package com.chinmay;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Scanner;
  * @author grandolf49
  */
 public class VigenereCipher {
+
+    static ArrayList<String> stringArrayList = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -23,6 +26,20 @@ public class VigenereCipher {
         // Encrypt the message using the key
         String encryptedString = vigenereCipherEncryption(message, key);
         System.out.println("Encrypted message is: " + encryptedString);
+
+        // Decrypt the message using Brute Force
+        generateAllStrings("", key.length() % message.length());
+
+    }
+
+    private static void generateAllStrings(String prefix, int n) {
+        if (prefix.length() == n) {
+            stringArrayList.add(prefix);
+        } else {
+            for (char a = 'a'; a < 'z'; a++) {
+                generateAllStrings(prefix + a, n);
+            }
+        }
     }
 
     private static String vigenereCipherEncryption(String message, String key) {

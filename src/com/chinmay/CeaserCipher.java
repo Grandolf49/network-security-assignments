@@ -25,6 +25,7 @@ public class CeaserCipher {
         String encryptedString = ceaserCipherEncryption(message, key);
         System.out.println("Encrypted string is: " + encryptedString);
 
+        // Decrypt the message by using Brute Force
         System.out.println("Applying Brute Force for Decryption...");
         String decryptedString = bruteForceCeaserCipher(encryptedString, message);
         System.out.println("The original message is: " + decryptedString);
