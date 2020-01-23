@@ -72,6 +72,14 @@ public class HillCipher {
      */
     private static String hillCipherDecryption(String encryptedMessage, int[][] keyMatrix) {
         String decryptedMessage = "";
+        int[] encrpytedMatrix = new int[encryptedMessage.length()];
+
+        // Initialize encrypted matrix
+        for (int i = 0; i < encryptedMessage.length(); i++) {
+            char c = encryptedMessage.charAt(i);
+            encrpytedMatrix[i] = c - 'a';
+        }
+
 
         return decryptedMessage;
     }
