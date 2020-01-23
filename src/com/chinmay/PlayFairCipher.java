@@ -15,12 +15,15 @@ public class PlayFairCipher {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
+        // Accept the message
         System.out.println("Enter the message:");
         String message = scan.nextLine();
 
+        // Accept the keyword
         System.out.println("Enter the keyword");
         String keyword = scan.nextLine();
 
+        // Encrypt the string
         String encryptedString = playFairCipherEncryption(message, keyword);
         System.out.println("Encrypted string is: " + encryptedString);
     }
