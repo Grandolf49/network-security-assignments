@@ -1,6 +1,5 @@
 package com.chinmay;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -34,6 +33,7 @@ public class PlayFairCipher {
         char[][] matrix = new char[SIZE][SIZE];
         int key_idx = 0;
         HashMap<Character, Integer> hashMap = new HashMap<>();
+        HashMap<Character, int[]> charCoordinatesMap = new HashMap<>();
 
         // Initialize matrix with null char
         for (int i = 0; i < SIZE; i++) {
@@ -50,6 +50,12 @@ public class PlayFairCipher {
                 int r = key_idx / SIZE, c = key_idx % SIZE;
                 matrix[r][c] = key;
                 key_idx++;
+
+                // Initialize coordinates hashmap
+                int[] coord = new int[2];
+                coord[0] = r;
+                coord[1] = c;
+                charCoordinatesMap.put(key, coord);
             }
         }
 
@@ -59,8 +65,15 @@ public class PlayFairCipher {
                 int r = key_idx / SIZE, c = key_idx % SIZE;
                 matrix[r][c] = a;
                 key_idx++;
+
+                // Initialize coordinates hashmap
+                int[] coord = new int[2];
+                coord[0] = r;
+                coord[1] = c;
+                charCoordinatesMap.put(a, coord);
             }
         }
+
         System.out.println("Cipher Matrix:");
         displayMatrix(matrix);
 
@@ -68,6 +81,42 @@ public class PlayFairCipher {
         String newMessage = constructMessage(message);
         System.out.println("New message: " + newMessage);
 
+        // Print coordinates hashmap
+        /*
+        System.out.println("Coordinates:");
+        for (char key : charCoordinatesMap.keySet()) {
+            int[] coor = charCoordinatesMap.get(key);
+            System.out.println("Key: " + key + " Coords: " + coor[0] + " " + coor[1]);
+        }
+        */
+
+        // Encrypting the message
+        for (int i = 0; i < newMessage.length(); i += 2) {
+            char a = newMessage.charAt(i);
+            char b = newMessage.charAt(i + 1);
+            char a_new, b_new;
+            int[] coord_a = charCoordinatesMap.get(a);
+            int[] coord_b = charCoordinatesMap.get(b);
+
+            // Case 1: same row
+            if (coord_a[0] == coord_b[0]) {
+                a_new = matrix[coord_a[0]][(coord_a[1] + 1) % SIZE];
+                b_new = matrix[coord_b[0]][(coord_b[1] + 1) % SIZE];
+            }
+            // Case 2: same col
+            else if (coord_a[1] == coord_b[1]) {
+                a_new = matrix[(coord_a[0] + 1) % SIZE][coord_a[1]];
+                b_new = matrix[(coord_b[0] + 1) % SIZE][coord_b[1]];
+            }
+            // Case 3: neither same row nor same col
+            else {
+                a_new = matrix[coord_a[0]][coord_b[1]];
+                b_new = matrix[coord_b[0]][coord_a[1]];
+            }
+
+            encryptedString.append(a_new).append(b_new);
+
+        }
         return encryptedString.toString();
     }
 
