@@ -84,15 +84,6 @@ public class PlayFairCipher {
         String newMessage = constructMessage(message);
         System.out.println("New message: " + newMessage);
 
-        // Print coordinates hashmap
-        /*
-        System.out.println("Coordinates:");
-        for (char key : charCoordinatesMap.keySet()) {
-            int[] coor = charCoordinatesMap.get(key);
-            System.out.println("Key: " + key + " Coords: " + coor[0] + " " + coor[1]);
-        }
-        */
-
         // Encrypting the message
         for (int i = 0; i < newMessage.length(); i += 2) {
             char a = newMessage.charAt(i);
@@ -126,7 +117,7 @@ public class PlayFairCipher {
     /**
      * A function to make sure that there are no repeated letters in group of 2 and the length of the message is even
      */
-    private static String constructMessage(String message) {
+    public static String constructMessage(String message) {
         StringBuilder stringBuilder = new StringBuilder(message);
 
         for (int i = 0; i < stringBuilder.length(); i += 2) {
