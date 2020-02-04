@@ -50,31 +50,22 @@ public class DES {
         }
         System.out.println("Key P10: " + permutation.toString());
 
-        // Circular Shift 1
-        String leftBitsCircularShift = generateCircularShift(permutation.substring(0, permutation.length() / 2), 1);
-        String rightBitsCircularShift = generateCircularShift(permutation.substring(permutation.length() / 2), 1);
+        // Circular Shift to generate keys
+        String circular_shift = permutation.toString();
+        for (int i = 1; i <= MAX_KEYS; i++) {
+            String leftBitsCircularShift = generateCircularShift(circular_shift.substring(0, circular_shift.length() / 2), i);
+            String rightBitsCircularShift = generateCircularShift(circular_shift.substring(circular_shift.length() / 2), i);
 
-        String circularShift_1 = leftBitsCircularShift + rightBitsCircularShift;
-        System.out.println("1st Circular Shift: " + circularShift_1);
+            circular_shift = leftBitsCircularShift + rightBitsCircularShift;
+            System.out.println("1st Circular Shift: " + circular_shift);
 
-        // Apply P8 on circular shift 1 to get first key
-        String key_1 = generatePermutation(circularShift_1, KEY_P8);
-        System.out.println("Key 1: " + key_1);
+            // Apply P8 on circular shift 1 to get first key
+            String key_1 = generatePermutation(circular_shift, KEY_P8);
+            System.out.println("Key " + i + ": " + key_1);
 
-        keys.add(key_1);
+            keys.add(key_1);
 
-        leftBitsCircularShift = generateCircularShift(circularShift_1.substring(0, circularShift_1.length() / 2), 2);
-        rightBitsCircularShift = generateCircularShift(circularShift_1.substring(circularShift_1.length() / 2), 2);
-
-        String circularShift_2 = leftBitsCircularShift + rightBitsCircularShift;
-        System.out.println("2nd Circular Shift: " + circularShift_2);
-
-        // Apply P8 on circular shift 2 to get second key
-        String key_2 = generatePermutation(circularShift_2, KEY_P8);
-        System.out.println("Key 2: " + key_2);
-
-        keys.add(key_2);
-
+        }
         return keys;
     }
 

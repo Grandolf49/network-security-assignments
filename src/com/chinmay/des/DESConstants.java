@@ -2,9 +2,10 @@ package com.chinmay.des;
 
 public class DESConstants {
 
-    // Input limits
+    // Limits
     public static final int PLAIN_TEXT_LENGTH = 8;
     public static final int KEY_LENGTH = 10;
+    public static final int MAX_KEYS = 2;
 
     // Input plain text and key
     public static final String PLAIN_TEXT = "10100101";
