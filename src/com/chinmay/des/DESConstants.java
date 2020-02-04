@@ -1,5 +1,10 @@
 package com.chinmay.des;
 
+/**
+ * A class to store all the constants used for DES Encryption
+ *
+ * @author grandolf49
+ */
 public class DESConstants {
 
     // Limits
@@ -28,6 +33,8 @@ public class DESConstants {
             {3, 0, 1, 0},
             {2, 1, 0, 3}
     };
+    public static final String BIN_0 = "0";
+    public static final String BIN_1 = "1";
 
     // Permutations for Key
     public static final int[] KEY_P10 = {3, 5, 2, 7, 4, 10, 1, 9, 8, 6};
