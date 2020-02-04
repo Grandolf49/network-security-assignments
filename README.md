@@ -3,10 +3,11 @@
 A repository that contains Java programs of Network Security assignments.
 
 ## Assignments
-- [Ceaser Cipher](https://en.wikipedia.org/wiki/Caesar_cipher)
-- [Hill Cipher](https://en.wikipedia.org/wiki/Hill_cipher)
-- [PlayFair Cipher](https://en.wikipedia.org/wiki/Playfair_cipher)
-- [Vigenere Cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
+- [Ceaser Cipher](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/CeaserCipher.java)
+- [Vigenere Cipher](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/VigenereCipher.java)
+- [PlayFair Cipher](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/PlayFairCipher.java)
+- [Hill Cipher](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/HillCipher.java)
+- [Data Encryption Standard (DES)](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/des/DES.java)
 
 ## How to use
 1. Clone the project
