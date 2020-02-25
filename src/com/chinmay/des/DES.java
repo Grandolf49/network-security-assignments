@@ -14,17 +14,65 @@ public class DES {
     public static void main(String[] args) {
 
         // Inputs defined in DESConstants.java class
-        System.out.println("=================== Data Encryption Standard ===================");
+        System.out.println("================================");
         System.out.println("Plain Text: " + PLAIN_TEXT);
         System.out.println("Key: " + KEY);
-        System.out.println("================================================================");
+        System.out.println("================================");
 
         // Encrypt message using DES Encryption
+        System.out.println("Encrypting the message");
         String encryptedMessage = desEncryption(PLAIN_TEXT, KEY);
-        System.out.println("================================================================");
+        System.out.println("================================");
         System.out.println("Encrypted message: " + encryptedMessage);
-        System.out.println("================================================================");
+        System.out.println("================================");
 
+        // Decrypt message using DES
+        System.out.println("Decrypting the message...");
+        String decryptedMessage = desDecryption(encryptedMessage, KEY);
+        System.out.println("================================");
+        System.out.println("Decrypted message: " + decryptedMessage);
+        System.out.println("Plain Text: " + PLAIN_TEXT);
+        System.out.println("================================");
+    }
+
+    private static String desDecryption(String encryptedMessage, String key) {
+        String decryptedMessage = "";
+        String resultComplexFunction = "";
+
+        // Apply initial permutation
+        String initialPermutation = generatePermutation(encryptedMessage, PLAIN_TEXT_IP);
+        System.out.println("Initial Permutation: " + initialPermutation);
+
+        // Generate keys for complex functions
+        ArrayList<String> keys = generateKeys(key);
+
+        // Apply complex function
+        String input = initialPermutation;
+
+        for (int i = 0; i < MAX_KEYS; i++) {
+            // Split the result into 2 equal parts
+            String leftOperand = input.substring(0, input.length() / 2);
+            String rightOperand = input.substring(input.length() / 2);
+            System.out.println("Left: " + leftOperand + "\t" + "Right: " + rightOperand);
+
+            // Apply complex function
+            resultComplexFunction = complexFunction(leftOperand, rightOperand, keys.get(keys.size() - i - 1));
+            System.out.println("Result " + (i + 1) + ": " + resultComplexFunction);
+
+            // Swap left and right operands
+            if (i == 0)
+                resultComplexFunction = resultComplexFunction.substring(resultComplexFunction.length() / 2) +
+                        resultComplexFunction.substring(0, resultComplexFunction.length() / 2);
+            else continue;
+
+            input = resultComplexFunction;
+        }
+        System.out.println("Result after applying complex function: " + resultComplexFunction);
+
+        // Apply IP Inverse on result of complex function to get final encrypted message
+        decryptedMessage = generatePermutation(resultComplexFunction, PLAIN_TEXT_IP_INV);
+
+        return decryptedMessage;
     }
 
     /**
