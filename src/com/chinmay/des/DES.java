@@ -35,6 +35,9 @@ public class DES {
         System.out.println("================================");
     }
 
+    /**
+     * A function to decrypt a cipher text with key using DES Encryption
+     */
     private static String desDecryption(String encryptedMessage, String key) {
         String decryptedMessage = "";
         String resultComplexFunction = "";
