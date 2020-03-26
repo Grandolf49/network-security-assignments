@@ -1,5 +1,7 @@
 package com.chinmay.aes;
 
+import java.util.ArrayList;
+
 /**
  * A class to store all the constants used for AES Encryption
  *
@@ -14,6 +16,7 @@ public class AESConstants {
     // Key Constants
     public static final int NO_OF_KEYS = 3;
     public static final String[] KEY_XOR = {"10000000", "00110000"};
+    public static ArrayList<String> KEYS = new ArrayList<>();
 
     // Encryption and Decryption variables
     public static final String[][] S_BOX_ENCRYPTION = {

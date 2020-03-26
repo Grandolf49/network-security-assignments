@@ -18,32 +18,71 @@ public class AES {
         System.out.println("Key: " + KEY);
         System.out.println("=============================================");
 
+        // Encryption
         System.out.println("Encrypting message...");
         String encryptedMessage = aesEncryption();
         System.out.println("=============================================");
         System.out.println("Encrypted Message: " + encryptedMessage);
         System.out.println("=============================================");
 
+        // Decryption
+        System.out.println("Decrypting message...");
+        String decryptedMessage = aesDecryption(encryptedMessage);
+        System.out.println("=============================================");
+        System.out.println("Decrypted Message:\t" + decryptedMessage);
+        System.out.println("Plain Text: \t\t" + PLAIN_TEXT);
+        System.out.println("=============================================");
+    }
+
+    /**
+     * A function to decrypt message using AES Encryption
+     */
+    private static String aesDecryption(String encryptedMessage) {
+        String decryptedMessage = "";
+
+        // Add Round Key 1
+        String addRoundKey = xor(encryptedMessage, KEYS.get(2));
+        System.out.println("Add Round Key 3: " + addRoundKey);
+
+        // Complex Function Inversion
+        for (int i = 1; i >= 0; i--) {
+            String shiftRow = shiftRow(addRoundKey);
+            System.out.println("Shift Row: " + shiftRow);
+
+            String subNibble = substituteNibble(shiftRow, S_BOX_DECRYPTION);
+            System.out.println("Substitute Nibble: " + subNibble);
+
+            addRoundKey = xor(subNibble, KEYS.get(i));
+            System.out.println("Add round key " + (i + 1) + ": " + addRoundKey);
+
+            if (i == 1) {
+                System.out.println("Applying inversion of mixed column");
+                addRoundKey = applyMixedColumn(addRoundKey, MIXED_COL_DECRYPTION);
+                System.out.println("After Mixed Column: " + addRoundKey);
+            }
+        }
+
+        decryptedMessage = addRoundKey;
+        return decryptedMessage;
     }
 
     /**
      * A function to encrypt message using AES Encryption
      */
     private static String aesEncryption() {
-
-        String encryptedMessage = "";
-        ArrayList<String> keys = generateKeys();
+        String encryptedMessage;
+        KEYS = generateKeys();
         System.out.println("All keys generated!\n");
 
         System.out.println("Encryption Begins!");
 
         // Add Round Key 1
-        String addRoundKey = xor(PLAIN_TEXT, keys.get(0));
+        String addRoundKey = xor(PLAIN_TEXT, KEYS.get(0));
         System.out.println("Add Round Key 1: " + addRoundKey);
 
         // Complex Function
         for (int i = 1; i < 3; i++) {
-            String sub_nib = substituteNibble(addRoundKey);
+            String sub_nib = substituteNibble(addRoundKey, S_BOX_ENCRYPTION);
             System.out.println("Substitute Nibble: " + sub_nib);
 
             String output = shiftRow(sub_nib);
@@ -51,11 +90,11 @@ public class AES {
 
             if (i == 1) {
                 System.out.println("Applying Mixed Column on: " + output);
-                output = applyMixedColumn(output);
+                output = applyMixedColumn(output, MIXED_COL_ENCRYPTION);
                 System.out.println("After Mixed Column: " + output);
             }
 
-            addRoundKey = xor(output, keys.get(i));
+            addRoundKey = xor(output, KEYS.get(i));
         }
 
         encryptedMessage = addRoundKey;
@@ -65,7 +104,7 @@ public class AES {
     /**
      * A utility function to apply Mixed Column Operation
      */
-    private static String applyMixedColumn(String output) {
+    private static String applyMixedColumn(String output, int[][] mixedColMatrix) {
         StringBuilder result = new StringBuilder();
 
         int[][] s_matrix = new int[2][2];
@@ -79,7 +118,7 @@ public class AES {
             for (int j = 0; j < 2; j++) {
                 int ans = 0;
                 for (int k = 0; k < 2; k++) {
-                    int a = MIXED_COL_ENCRYPTION[i][k] * s_matrix[k][j];
+                    int a = mixedColMatrix[i][k] * s_matrix[k][j];
                     a = applyPolynomialReducer(a);
                     ans ^= a;
                 }
@@ -112,10 +151,17 @@ public class AES {
      * A utility function to perform the polynomial reducer operation
      */
     private static int applyPolynomialReducer(int number) {
+        if (number > 127) {
+            return applyPolynomialReducer(number % 127) ^ applyPolynomialReducer(127);
+        }
         while (number > 15) {
             int factor = number / POLY_REDUCER_CONST;
             int max_power_of_2 = (int) (Math.log(factor) / Math.log(2));
-            number = number ^ (POLY_REDUCER_CONST * (int) Math.pow(2, max_power_of_2));
+            int xor_ele = POLY_REDUCER_CONST * (int) Math.pow(2, max_power_of_2);
+            if (number < POLY_REDUCER_CONST) {
+                xor_ele = POLY_REDUCER_CONST;
+            }
+            number = number ^ xor_ele;
         }
         return number;
     }
@@ -149,7 +195,7 @@ public class AES {
             String rot_nib = rotateNibble(w1);
             System.out.println("Rotate Nibble of w1: " + rot_nib);
 
-            String sub_nib = substituteNibble(rot_nib);
+            String sub_nib = substituteNibble(rot_nib, S_BOX_ENCRYPTION);
             System.out.println("Substitute Nibble of w1: " + sub_nib);
 
             String xor_1 = xor(KEY_XOR[i], sub_nib);
@@ -189,13 +235,13 @@ public class AES {
     /**
      * A function to substitute nibble from S-Box Encryption
      */
-    private static String substituteNibble(String rot_nib) {
+    private static String substituteNibble(String rot_nib, String[][] subBox) {
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < rot_nib.length(); i += 4) {
             int r = Integer.parseInt(rot_nib.substring(i, i + 2), 2);
             int c = Integer.parseInt(rot_nib.substring(i + 2, i + 4), 2);
-            result.append(S_BOX_ENCRYPTION[r][c]);
+            result.append(subBox[r][c]);
         }
 
         return result.toString();
