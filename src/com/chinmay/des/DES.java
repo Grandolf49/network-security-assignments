@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import static com.chinmay.des.DESConstants.*;
 
 /**
- * A program to encrypt message using DES Encryption
+ * A program to encrypt and decrypt a message using DES Encryption
  *
  * @author grandolf49
  */

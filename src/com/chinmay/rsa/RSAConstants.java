@@ -1,5 +1,10 @@
 package com.chinmay.rsa;
 
+/**
+ * A class to store all the constants used for RSA Algorithm
+ *
+ * @author grandolf49
+ */
 public class RSAConstants {
 
     public static final int P = 17;

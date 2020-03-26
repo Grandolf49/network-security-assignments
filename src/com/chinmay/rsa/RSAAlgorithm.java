@@ -2,6 +2,11 @@ package com.chinmay.rsa;
 
 import static com.chinmay.rsa.RSAConstants.*;
 
+/**
+ * A program to encrypt and decrypt a message using DES Encryption
+ *
+ * @author grandolf49
+ */
 public class RSAAlgorithm {
 
     public static void main(String[] args) {
@@ -20,6 +25,9 @@ public class RSAAlgorithm {
 
     }
 
+    /**
+     * A function to decrypt a number using RSA Algorithm
+     */
     private static int rsaDecryption(int C) {
 
         int n = P * Q;
@@ -36,6 +44,9 @@ public class RSAAlgorithm {
         return decrypted;
     }
 
+    /**
+     * A function to encrypt a number using RSA Algorithm
+     */
     private static int rsaEncryption() {
         int n = P * Q;
         System.out.println("N = " + n);
