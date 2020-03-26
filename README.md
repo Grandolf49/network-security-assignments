@@ -8,6 +8,7 @@ A repository that contains Java programs of Network Security assignments.
 - [PlayFair Cipher](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/PlayFairCipher.java)
 - [Hill Cipher](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/HillCipher.java)
 - [Data Encryption Standard (DES)](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/des/DES.java)
+- [Advanced Encryption Standard (AES)](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/aes/AES.java)
 
 ## How to use
 1. Clone the project
