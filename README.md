@@ -10,6 +10,7 @@ A repository that contains Java programs of Network Security assignments.
 - [Data Encryption Standard (DES)](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/des/DES.java)
 - [Advanced Encryption Standard (AES)](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/aes/AES.java)
 - [Rivest Shamir Adleman (RSA)](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/rsa/RSAAlgorithm.java)
+- [Diffie Hellman Key Exchange](https://github.com/Grandolf49/network-security-assignments/blob/master/src/com/chinmay/dhke/DiffieHellmanKeyExchange.java)
 
 ## How to use
 1. Clone the project
