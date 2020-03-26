@@ -12,6 +12,7 @@ public class AESConstants {
     public static final String KEY = "0100101011110101";
 
     // Key Constants
+    public static final int NO_OF_KEYS = 3;
     public static final String[] KEY_XOR = {"10000000", "00110000"};
 
     // Encryption and Decryption variables

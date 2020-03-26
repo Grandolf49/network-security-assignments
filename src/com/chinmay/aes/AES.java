@@ -13,21 +13,33 @@ public class AES {
 
     public static void main(String[] args) {
 
+        System.out.println("=============================================");
         System.out.println("Plain Text: " + PLAIN_TEXT);
         System.out.println("Key: " + KEY);
+        System.out.println("=============================================");
 
         System.out.println("Encrypting message...");
         String encryptedMessage = aesEncryption();
+        System.out.println("=============================================");
         System.out.println("Encrypted Message: " + encryptedMessage);
+        System.out.println("=============================================");
 
     }
 
+    /**
+     * A function to encrypt message using AES Encryption
+     */
     private static String aesEncryption() {
 
         String encryptedMessage = "";
         ArrayList<String> keys = generateKeys();
+        System.out.println("All keys generated!\n");
 
+        System.out.println("Encryption Begins!");
+
+        // Add Round Key 1
         String addRoundKey = xor(PLAIN_TEXT, keys.get(0));
+        System.out.println("Add Round Key 1: " + addRoundKey);
 
         // Complex Function
         for (int i = 1; i < 3; i++) {
@@ -38,8 +50,9 @@ public class AES {
             System.out.println("Shift Row: " + output);
 
             if (i == 1) {
-                // TODO: Apply mixed column
+                System.out.println("Applying Mixed Column on: " + output);
                 output = applyMixedColumn(output);
+                System.out.println("After Mixed Column: " + output);
             }
 
             addRoundKey = xor(output, keys.get(i));
@@ -49,6 +62,9 @@ public class AES {
         return encryptedMessage;
     }
 
+    /**
+     * A utility function to apply Mixed Column Operation
+     */
     private static String applyMixedColumn(String output) {
         StringBuilder result = new StringBuilder();
 
@@ -68,18 +84,33 @@ public class AES {
                     ans ^= a;
                 }
                 mul_matrix[i][j] = applyPolynomialReducer(ans);
-                System.out.println("After reducer op: " + mul_matrix[i][j]);
             }
         }
 
-        for (int i = 0; i < output.length(); i += 4) {
-            int num = Integer.parseInt(output.substring(i, i + 4), 2);
-            s_matrix[(i / 4) % 2][i / 8] = num;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                String bin = Integer.toBinaryString(mul_matrix[j][i]);
+                switch (bin.length()) {
+                    case 1:
+                        bin = "000" + bin;
+                        break;
+                    case 2:
+                        bin = "00" + bin;
+                        break;
+                    case 3:
+                        bin = "0" + bin;
+                        break;
+                }
+                result.append(bin);
+            }
         }
 
         return result.toString();
     }
 
+    /**
+     * A utility function to perform the polynomial reducer operation
+     */
     private static int applyPolynomialReducer(int number) {
         while (number > 15) {
             int factor = number / POLY_REDUCER_CONST;
@@ -113,7 +144,7 @@ public class AES {
         String w0 = AESConstants.KEY.substring(0, AESConstants.KEY.length() / 2);
         String w1 = AESConstants.KEY.substring(AESConstants.KEY.length() / 2);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < NO_OF_KEYS - 1; i++) {
 
             String rot_nib = rotateNibble(w1);
             System.out.println("Rotate Nibble of w1: " + rot_nib);
