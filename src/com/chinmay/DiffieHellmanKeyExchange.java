@@ -1,9 +1,6 @@
-package com.chinmay.dhke;
+package com.chinmay;
 
 import java.util.Scanner;
-
-import static com.chinmay.dhke.DiffieHellmanConstants.PUBLIC_G;
-import static com.chinmay.dhke.DiffieHellmanConstants.PUBLIC_P;
 
 /**
  * A program to perform Diffie Hellman Key Exchange
@@ -11,6 +8,9 @@ import static com.chinmay.dhke.DiffieHellmanConstants.PUBLIC_P;
  * @author grandolf49
  */
 public class DiffieHellmanKeyExchange {
+
+    public static final int PUBLIC_P = 23;
+    public static final int PUBLIC_G = 9;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
