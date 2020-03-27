@@ -1,6 +1,4 @@
-package com.chinmay.rsa;
-
-import static com.chinmay.rsa.RSAConstants.*;
+package com.chinmay;
 
 /**
  * A program to encrypt and decrypt a message using DES Encryption
@@ -8,6 +6,11 @@ import static com.chinmay.rsa.RSAConstants.*;
  * @author grandolf49
  */
 public class RSAAlgorithm {
+
+    public static final int P = 17;
+    public static final int Q = 11;
+    public static final int M = 88;
+    public static final int E = 7;
 
     public static void main(String[] args) {
         System.out.println("P = " + P + " Q = " + Q + " M = " + M);

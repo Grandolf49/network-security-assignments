@@ -28,7 +28,7 @@ public class DiffieHellmanKeyExchange {
         System.out.println("Public key of Alice: " + public_alice);
 
         int public_bob = generatePublicKey(private_bob);
-        System.out.println("Public key of Alice: " + public_bob);
+        System.out.println("Public key of Bob: " + public_bob);
 
         System.out.println("Exchanging public keys...");
         int key_alice = generateKey(public_bob, private_alice);
