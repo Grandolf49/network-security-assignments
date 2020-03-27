@@ -32,7 +32,6 @@ public class RSAAlgorithm {
      * A function to decrypt a number using RSA Algorithm
      */
     private static int rsaDecryption(int C) {
-
         int n = P * Q;
         int phi_n = (P - 1) * (Q - 1);
         System.out.println("Phi(n) = " + phi_n);
